@@ -31,3 +31,37 @@ For installation instructions please refer to our docs at [https://filebrowser.o
 ## Contributing
 
 If you're interested in contributing to this project, our docs are best places to start [https://filebrowser.org/contributing](https://filebrowser.org/contributing).
+
+# run & build
+
+## Vue
+
+Env
+```
+export NODE_OPTIONS=--openssl-legacy-provider
+```
+
+Build
+```
+cd frontend
+
+npn install
+
+npm run build2
+```
+
+## Golan
+
+Env
+```
+export CGO_ENABLED=0
+export GOOS=linux 
+export GOARCH=mipsle
+```
+
+Build
+```
+go run main.go
+
+go build
+```
