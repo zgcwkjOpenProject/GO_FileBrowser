@@ -45,7 +45,7 @@ cd frontend
 
 npn install
 
-npm run build2
+npm run build
 ```
 
 ## Golan
