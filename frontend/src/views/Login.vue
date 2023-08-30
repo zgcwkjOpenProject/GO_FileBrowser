@@ -39,6 +39,7 @@
           createMode ? $t("login.loginInstead") : $t("login.createAnAccount")
         }}
       </p>
+      <p @click="guestMode">{{$t("login.guest")}}</p>
     </form>
   </div>
 </template>
@@ -105,6 +106,40 @@ export default {
       if (this.createMode) {
         if (this.password !== this.passwordConfirm) {
           this.error = this.$t("login.passwordsDontMatch");
+          return;
+        }
+      }
+
+      try {
+        if (this.createMode) {
+          await auth.signup(this.username, this.password);
+        }
+
+        await auth.login(this.username, this.password, captcha);
+        this.$router.push({ path: redirect });
+      } catch (e) {
+        if (e.message == 409) {
+          this.error = this.$t("login.usernameTaken");
+        } else {
+          this.error = this.$t("login.wrongCredentials");
+        }
+      }
+    },
+    async guestMode() {
+      this.username = 'guest';
+      this.password = 'guest';
+
+      let redirect = this.$route.query.redirect;
+      if (redirect === "" || redirect === undefined || redirect === null) {
+        redirect = "/files/";
+      }
+
+      let captcha = "";
+      if (recaptcha) {
+        captcha = window.grecaptcha.getResponse();
+
+        if (captcha === "") {
+          this.error = this.$t("login.wrongCredentials");
           return;
         }
       }
