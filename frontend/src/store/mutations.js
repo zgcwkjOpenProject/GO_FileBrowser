@@ -6,6 +6,7 @@ const mutations = {
     state.prompts.pop();
   },
   toggleShell: (state) => {
+    state.show = null;
     state.showShell = !state.showShell;
   },
   showHover: (state, value) => {
@@ -97,12 +98,20 @@ const mutations = {
     state.clipboard.key = "";
     state.clipboard.items = [];
   },
+  setUploadSpeed: (state, value) => {
+    state.upload.speedMbyte = value;
+  },
+  setETA(state, value) {
+    state.upload.eta = value;
+  },
   resetUpload(state) {
     state.upload.uploads = {};
     state.upload.queue = [];
     state.upload.progress = [];
     state.upload.sizes = [];
     state.upload.id = 0;
+    state.upload.speedMbyte = 0;
+    state.upload.eta = 0;
   },
 };
 
