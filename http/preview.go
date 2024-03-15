@@ -117,30 +117,27 @@ func createPreview(imgSvc ImgService, fileCache FileCache,
 	}
 	defer fd.Close()
 
-	var (
-		width   int
-		height  int
-		options []img.Option
-	)
-
-	switch {
-	case previewSize == PreviewSizeBig:
-		width = 1080
-		height = 1080
-		options = append(options, img.WithMode(img.ResizeModeFit), img.WithQuality(img.QualityMedium))
-	case previewSize == PreviewSizeThumb:
-		width = 256
-		height = 256
-		options = append(options, img.WithMode(img.ResizeModeFill), img.WithQuality(img.QualityLow), img.WithFormat(img.FormatJpeg))
-	default:
-		return nil, img.ErrUnsupportedFormat
-	}
-
 	buf := &bytes.Buffer{}
-	if err := imgSvc.Resize(context.Background(), fd, width, height, buf, options...); err != nil {
-		return nil, err
+	switch {
+		case previewSize == PreviewSizeBig:
+			//读原图片
+			_, err = io.Copy(buf, fd)
+			if err != nil {
+				return nil, err
+			}
+		case previewSize == PreviewSizeThumb:
+			var width = 256
+			var height = 256
+			var options []img.Option
+			options = append(options, img.WithMode(img.ResizeModeFill), img.WithQuality(img.QualityLow), img.WithFormat(img.FormatJpeg))
+			//缩放图片
+			if err := imgSvc.Resize(context.Background(), fd, width, height, buf, options...); err != nil {
+				return nil, err
+			}
+		default:
+			return nil, img.ErrUnsupportedFormat
 	}
-
+	//缓存
 	go func() {
 		cacheKey := previewCacheKey(file, previewSize)
 		if err := fileCache.Store(context.Background(), cacheKey, buf.Bytes()); err != nil {
@@ -148,6 +145,7 @@ func createPreview(imgSvc ImgService, fileCache FileCache,
 		}
 	}()
 
+	//返回二进制流
 	return buf.Bytes(), nil
 }
 
