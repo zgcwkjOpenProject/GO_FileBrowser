@@ -37,6 +37,7 @@
       <p @click="toggleMode" v-if="signup">
         {{ createMode ? t("login.loginInstead") : t("login.createAnAccount") }}
       </p>
+      <p @click="guestLogin">{{$t("login.guest")}}</p>
     </form>
   </div>
 </template>
@@ -71,6 +72,53 @@ const toggleMode = () => (createMode.value = !createMode.value);
 const $showError = inject<IToastError>("$showError")!;
 
 const submit = async (event: Event) => {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const redirect = (route.query.redirect || "/files/") as string;
+
+  let captcha = "";
+  if (recaptcha) {
+    captcha = window.grecaptcha.getResponse();
+
+    if (captcha === "") {
+      error.value = t("login.wrongCredentials");
+      return;
+    }
+  }
+
+  if (createMode.value) {
+    if (password.value !== passwordConfirm.value) {
+      error.value = t("login.passwordsDontMatch");
+      return;
+    }
+  }
+
+  try {
+    if (createMode.value) {
+      await auth.signup(username.value, password.value);
+    }
+
+    await auth.login(username.value, password.value, captcha);
+    router.push({ path: redirect });
+  } catch (e: any) {
+    // console.error(e);
+    if (e instanceof StatusError) {
+      if (e.status === 409) {
+        error.value = t("login.usernameTaken");
+      } else if (e.status === 403) {
+        error.value = t("login.wrongCredentials");
+      } else {
+        $showError(e);
+      }
+    }
+  }
+};
+
+const guestLogin = async (event: Event) => {
+  username.value = 'guest';
+  password.value = 'guest';
+  
   event.preventDefault();
   event.stopPropagation();
 
