@@ -97,6 +97,7 @@
     "passwordsDontMatch": "密码不一致",
     "signup": "注册",
     "submit": "登录",
+    "guest": "访客",
     "username": "用户名",
     "usernameTaken": "用户名已经被使用",
     "wrongCredentials": "用户名或密码错误"
