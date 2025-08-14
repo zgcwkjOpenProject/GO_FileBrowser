@@ -10,29 +10,51 @@
 
 File Browser provides a file managing interface within a specified directory and it can be used to upload, delete, preview and edit your files. It is a **create-your-own-cloud**-kind of software where you can just install it on your server, direct it to a path and access your files through a nice web interface.
 
-## Documentation
+# run & build
 
-Documentation on how to install, configure, and contribute to this project is hosted at [filebrowser.org](https://filebrowser.org).
+## Vue
 
-## Project Status
+Env
+```
+export NODE_OPTIONS=--openssl-legacy-provider
+```
 
-> [!WARNING]
->
-> This project is currently on **maintenance-only** mode, and is looking for new maintainers. For more information, please read the [discussion #4906](https://github.com/filebrowser/filebrowser/discussions/4906). Therefore, please note the following:
->
-> - It can take a while until someone gets back to you. Please be patient.
-> - [Issues][issues] are only being used to track bugs. Any unrelated issues will be converted into a [discussion][discussions].
-> - No new features will be implemented until further notice. The priority is on triaging issues and merge bug fixes.
-> 
-> If you're interested in maintaining this project, please reach out via the discussion above.
+Build
+```
+cd frontend
 
-[issues]: https://github.com/filebrowser/filebrowser/issues
-[discussions]: https://github.com/filebrowser/filebrowser/discussions
+npm install
 
-## Contributing
+npm run build
+```
 
-Contributions are always welcome. To start contributing to this project, read our [guidelines](CONTRIBUTING.md) first.
+## Golang
 
-## License
+Env
+```
+export CGO_ENABLED=0
+export GOOS=linux 
+export GOARCH=mipsle
 
-[Apache License 2.0](LICENSE) © File Browser Contributors
+export CGO_ENABLED=0
+export GOOS=windows
+export GOARCH=amd64
+
+export CGO_ENABLED=0
+export GOOS=darwin
+export GOARCH=amd64
+```
+
+Build
+```
+go run main.go
+
+go build -ldflags="-w -s" -trimpath
+```
+
+Init
+```
+./filebrowser config set --address 0.0.0.0
+./filebrowser config set --port 8080
+./filebrowser config set --root /
+```
