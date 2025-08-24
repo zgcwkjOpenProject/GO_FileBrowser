@@ -2,10 +2,6 @@
   <div v-show="active" @click="closeHovers" class="overlay"></div>
   <nav :class="{ active }">
     <template v-if="isLoggedIn">
-      <button @click="toAccountSettings" class="action">
-        <i class="material-icons">person</i>
-        <span>{{ user.username }}</span>
-      </button>
       <button
         class="action"
         @click="toRoot"
@@ -38,16 +34,25 @@
         </button>
       </div>
 
-      <div v-if="user.perm.admin">
-        <button
-          class="action"
-          @click="toGlobalSettings"
-          :aria-label="$t('sidebar.settings')"
-          :title="$t('sidebar.settings')"
-        >
-          <i class="material-icons">settings_applications</i>
-          <span>{{ $t("sidebar.settings") }}</span>
-        </button>
+      <div>
+        <div>
+          <button
+            v-if="user.perm.admin"
+            @click="toGlobalSettings"
+            :aria-label="$t('sidebar.settings')"
+            :title="$t('sidebar.settings')"
+            class="action">
+            <i class="material-icons">settings_applications</i>
+            <span>{{ $t("sidebar.settings") }}</span>
+          </button>
+          <button
+            v-else
+            @click="toAccountSettings"
+            class="action">
+            <i class="material-icons">settings_applications</i>
+            <span>{{ $t("sidebar.settings") }}</span>
+          </button>
+        </div>
       </div>
       <button
         v-if="canLogout"
@@ -104,7 +109,6 @@
           href="https://github.com/filebrowser/filebrowser"
           >File Browser</a
         >
-        <span> {{ " " }} {{ version }}</span>
       </span>
       <span>
         <a @click="help">{{ $t("sidebar.help") }}</a>

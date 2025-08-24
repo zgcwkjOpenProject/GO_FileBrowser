@@ -98,6 +98,7 @@
     "passwordsDontMatch": "密碼不匹配",
     "signup": "註冊",
     "submit": "登入",
+    "guest": "訪客",
     "username": "帳號",
     "usernameTaken": "用戶名已存在",
     "wrongCredentials": "帳號或密碼錯誤"
@@ -109,7 +110,7 @@
     "currentlyNavigating": "目前目錄：",
     "deleteMessageMultiple": "你確定要刪除這 {count} 個檔案嗎?",
     "deleteMessageSingle": "你確定要刪除這個檔案/資料夾嗎?",
-    "deleteMessageShare": "你確定要刪除這個分享（{path}）嗎？",
+    "deleteMessageShare": "你確定要刪除這個分享嗎？",
     "deleteUser": "你確定要刪除這個使用者嗎?",
     "deleteTitle": "刪除檔案",
     "displayName": "名稱：",

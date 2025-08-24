@@ -98,6 +98,7 @@
     "passwordsDontMatch": "Passwords don't match",
     "signup": "Signup",
     "submit": "Login",
+    "guest": "Guest",
     "username": "Username",
     "usernameTaken": "Username already taken",
     "wrongCredentials": "Wrong credentials"
@@ -109,7 +110,7 @@
     "currentlyNavigating": "Currently navigating on:",
     "deleteMessageMultiple": "Are you sure you wish to delete {count} file(s)?",
     "deleteMessageSingle": "Are you sure you wish to delete this file/folder?",
-    "deleteMessageShare": "Are you sure you wish to delete this share({path})?",
+    "deleteMessageShare": "Are you sure you wish to delete this share?",
     "deleteUser": "Are you sure you want to delete this user?",
     "deleteTitle": "Delete files",
     "displayName": "Display Name:",

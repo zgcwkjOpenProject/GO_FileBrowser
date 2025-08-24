@@ -74,7 +74,7 @@ func addUserFlags(flags *pflag.FlagSet) {
 	flags.Bool("lockPassword", false, "lock password")
 	flags.StringSlice("commands", nil, "a list of the commands a user can execute")
 	flags.String("scope", ".", "scope for users")
-	flags.String("locale", "en", "locale for users")
+	flags.String("locale", "zh-cn", "locale for users")
 	flags.String("viewMode", string(users.ListViewMode), "view mode for users")
 	flags.Bool("singleClick", false, "use single clicks only")
 	flags.Bool("dateFormat", false, "use date format (true for absolute time, false for relative)")
