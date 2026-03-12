@@ -1,32 +1,52 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/filebrowser/filebrowser/master/branding/banner.png" width="550"/>
+  <img src="https://raw.githubusercontent.com/filebrowser/logo/master/banner.png" width="550"/>
 </p>
-
-[![Build](https://github.com/filebrowser/filebrowser/actions/workflows/ci.yaml/badge.svg)](https://github.com/filebrowser/filebrowser/actions/workflows/ci.yaml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/filebrowser/filebrowser/v2)](https://goreportcard.com/report/github.com/filebrowser/filebrowser/v2)
-[![Version](https://img.shields.io/github/release/filebrowser/filebrowser.svg)](https://github.com/filebrowser/filebrowser/releases/latest)
 
 File Browser provides a file managing interface within a specified directory and it can be used to upload, delete, preview and edit your files. It is a **create-your-own-cloud**-kind of software where you can just install it on your server, direct it to a path and access your files through a nice web interface.
 
-## Documentation
+# run & build
 
-Documentation on how to install, configure, and contribute to this project is hosted at [filebrowser.org](https://filebrowser.org).
+## Vue
 
-## Project Status
+Env
+```
+export NODE_OPTIONS=--openssl-legacy-provider
+```
 
-This project is a finished product which fulfills its goal: be a single binary web File Browser which can be run by anyone anywhere. That means that File Browser is currently on **maintenance-only** mode. Therefore, please note the following:
+Build
+```
+cd frontend
+npm install
+npm run build
+```
 
-- It can take a while until someone gets back to you. Please be patient.
-- [Issues](https://github.com/filebrowser/filebrowser/issues) are meant to track bugs. Unrelated issues will be converted into [discussions](https://github.com/filebrowser/filebrowser/discussions).
-- The priority is triaging issues, addressing security issues and reviewing pull requests meant to solve bugs.
-- No new features are planned. Pull requests for new features are not guaranteed to be reviewed.
+## Golang
 
-Please read [@hacdias' personal reflection](https://hacdias.com/2026/03/11/filebrowser/) on the project status.
+Env
+```
+export CGO_ENABLED=0
+export GOOS=linux 
+export GOARCH=mipsle
 
-## Contributing
+export CGO_ENABLED=0
+export GOOS=windows
+export GOARCH=amd64
 
-Contributions are always welcome. To start contributing to this project, read our [guidelines](CONTRIBUTING.md) first.
+export CGO_ENABLED=0
+export GOOS=darwin
+export GOARCH=amd64
+```
 
-## License
+Build
+```
+go run main.go
 
-[Apache License 2.0](LICENSE) © File Browser Contributors
+go build -ldflags="-w -s" -trimpath
+```
+
+Init
+```
+./filebrowser config set --address 0.0.0.0
+./filebrowser config set --port 8080
+./filebrowser config set --root /
+```

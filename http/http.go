@@ -39,6 +39,9 @@ func NewHandler(
 		return handle(fn, prefix, store, server)
 	}
 
+	// WebDAV路由
+	r.PathPrefix("/dav").Handler(monkey(webdavHandler, "/dav"))
+
 	r.HandleFunc("/health", healthHandler)
 	r.PathPrefix("/static").Handler(static)
 	r.NotFoundHandler = index
